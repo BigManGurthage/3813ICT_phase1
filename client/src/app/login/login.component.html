@@ -1,0 +1,11 @@
+<h2>Login</h2>
+<form (submit)="login(usernameInput.value, passwordInput.value)">
+  <label for="username">Username</label>
+  <input id="username" #usernameInput name="username" required>
+
+  <label for="password">Password</label>
+  <input id="password" #passwordInput name="password" required type="password">
+
+  <button type="submit">Login</button>
+</form>
+
