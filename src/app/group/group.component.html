@@ -1,0 +1,23 @@
+<h2>Group Admin Dashboard</h2>
+<app-logout></app-logout>
+
+
+<div>
+  <h3>Channels in Group</h3>
+  <ul>
+    <li *ngFor="let channel of channels">
+      {{ channel.name }}
+      <button (click)="removeChannel(channel.id)">Remove Channel</button>
+      <button (click)="viewChannelDetails(channel.id)">View Details</button>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3>Create New Channel</h3>
+  <form (ngSubmit)="createChannel()">
+    <label for="channelName">Channel Name:</label>
+    <input type="text" id="channelName" [(ngModel)]="newChannelName" name="channelName" required>
+    <button type="submit">Create Channel</button>
+  </form>
+</div>

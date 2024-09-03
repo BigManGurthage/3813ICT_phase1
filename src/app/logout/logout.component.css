@@ -1,0 +1,24 @@
+/* General button styling */
+button {
+    background-color: #007bff; /* Primary blue color */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  /* Hover effect */
+  button:hover {
+    background-color: #0056b3; /* Darker blue for hover */
+    transform: translateY(-2px); /* Slight lift effect */
+  }
+  
+  /* Focus effect */
+  button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(38, 143, 255, 0.5); /* Light blue outline */
+  }
+  

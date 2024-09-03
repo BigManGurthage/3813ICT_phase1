@@ -1,0 +1,34 @@
+<h2>Super Admin Dashboard</h2>
+<app-logout></app-logout>
+
+
+<div>
+  <h3>Users</h3>
+  <ul>
+    <li *ngFor="let user of users">
+      {{ user.username }} ({{ user.roles.join(', ') }})
+      <button (click)="removeUser(user.id)">Remove User</button>
+      <button (click)="promoteUser(user.id)">Promote</button>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3>Groups</h3>
+  <ul>
+    <li *ngFor="let group of groups">
+      {{ group.name }}
+      <button (click)="removeGroup(group.id)">Remove Group</button>
+      <button (click)="viewGroupDetails(group.id)">View Details</button>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3>Create New Group</h3>
+  <form (ngSubmit)="createGroup()">
+    <label for="groupName">Group Name:</label>
+    <input type="text" id="groupName" [(ngModel)]="newGroupName" name="groupName" required>
+    <button type="submit">Create Group</button>
+  </form>
+</div>

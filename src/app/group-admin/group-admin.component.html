@@ -1,0 +1,20 @@
+<div>
+  <h3>Manage Group</h3>
+  <app-logout></app-logout>
+
+  <ul>
+    <li *ngFor="let group of groups">
+      {{ group.name }}
+      <button (click)="removeGroup(group.id)">Remove Group</button>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3>Create New Group</h3>
+  <form (ngSubmit)="createGroup()">
+    <label for="groupName">Group Name:</label>
+    <input type="text" id="groupName" [(ngModel)]="newGroupName" name="groupName" required>
+    <button type="submit">Create Group</button>
+  </form>
+</div>

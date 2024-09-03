@@ -1,13 +1,21 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
+  templateUrl: './app.component.html',
   standalone: true,
   imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'chat-system';
+  constructor(private router: Router) {}
+
+  navigateTo(route: string) {
+    this.router.navigate([`/${route}`]);
+  }
+
+  getStarted(): void {
+    console.log('Get Started button clicked');
+  }
 }

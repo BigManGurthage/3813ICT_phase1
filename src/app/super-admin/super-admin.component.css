@@ -1,0 +1,124 @@
+/* Super Admin Dashboard Styles */
+.super-admin-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    font-size: 26px;
+    color: #1e2a38;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  app-logout {
+    display: block;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  div {
+    margin-bottom: 30px;
+  }
+  
+  h3 {
+    font-size: 22px;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  li {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #ecf0f1;
+  }
+  
+  li:last-child {
+    border-bottom: none;
+  }
+  
+  button {
+    margin-left: 10px;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  button:hover {
+    opacity: 0.9;
+  }
+  
+  /* Remove User button styling */
+  button:nth-of-type(1) {
+    background-color: #e74c3c; /* Red for Remove User */
+    color: #fff;
+  }
+  
+  /* Promote User button styling */
+  button:nth-of-type(2) {
+    background-color: #3498db; /* Blue for Promote User */
+    color: #fff;
+  }
+  
+  /* Remove Group button styling */
+  button.remove-group {
+    background-color: #e74c3c; /* Red for Remove Group */
+    color: #fff;
+  }
+  
+  /* View Details button styling */
+  button.view-group-details {
+    background-color: #3498db; /* Blue for View Details */
+    color: #fff;
+  }
+  
+  /* Create Group form styling */
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-size: 16px;
+    color: #2c3e50;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    margin-bottom: 15px;
+  }
+  
+  button[type="submit"] {
+    background-color: #27ae60; /* Green for Create Group */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #229954;
+  }
+  

@@ -1,0 +1,21 @@
+<div>
+    <h3>Create New Channel</h3>
+    <form (ngSubmit)="createChannel()">
+      <label for="groupName">Group Name:</label>
+      <input type="text" id="groupName" [(ngModel)]="newChannel.groupName" name="groupName" required>
+      <label for="channelName">Channel Name:</label>
+      <input type="text" id="channelName" [(ngModel)]="newChannel.channelName" name="channelName" required>
+      <button type="submit">Create Channel</button>
+    </form>
+  
+    <h3>Channel List</h3>
+    <ul>
+      <li *ngFor="let group of channels">
+        <strong>{{ group.groupName }}</strong>
+        <ul>
+          <li *ngFor="let channel of group.channels">{{ channel }}</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  

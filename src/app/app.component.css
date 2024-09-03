@@ -1,0 +1,58 @@
+/* Body styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5; /* Light background for contrast */
+  }
+  
+  /* Main container styling */
+  .home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full viewport height */
+    text-align: center;
+    padding: 20px;
+  }
+  
+  /* Heading styling */
+  .home-container h1 {
+    font-size: 3rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+  
+  /* Subtitle or description styling */
+  .home-container p {
+    font-size: 1.25rem;
+    color: #34495e;
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
+  
+  /* Button styling */
+  .home-container button {
+    background-color: #3498db; /* Primary blue color */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 15px 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  /* Button hover effect */
+  .home-container button:hover {
+    background-color: #2980b9; /* Darker blue for hover */
+    transform: translateY(-2px); /* Slight lift effect */
+  }
+  
+  /* Router outlet styling */
+  router-outlet {
+    width: 100%;
+  }
+  

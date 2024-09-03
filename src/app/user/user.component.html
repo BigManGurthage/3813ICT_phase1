@@ -1,0 +1,12 @@
+<h2>Welcome, {{ currentUser.username }}!</h2>
+<app-logout></app-logout>
+
+<p>Available groups:</p>
+<ul>
+  <li *ngFor="let group of groups">
+    <span>{{ group.name }}</span>
+    <button *ngIf="!currentUser.groups.includes(group.name)" (click)="joinGroup(group.name)">Join</button>
+    <button *ngIf="currentUser.groups.includes(group.name)" (click)="leaveGroup(group.name)">Leave</button>
+  </li>
+</ul>
+<button (click)="deleteAccount()">Delete Account</button>
