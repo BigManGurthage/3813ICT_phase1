@@ -1,20 +1,53 @@
 <div>
-  <h3>Manage Group</h3>
+  <h3>Manage Groups</h3>
   <app-logout></app-logout>
+
+  <div>
+    <h4>Create New Group</h4>
+    <form (ngSubmit)="createGroup()">
+      <label for="groupName">Group Name:</label>
+      <input type="text" id="groupName" [(ngModel)]="newGroupName" name="groupName" required>
+      <button type="submit">Create Group</button>
+    </form>
+  </div>
 
   <ul>
     <li *ngFor="let group of groups">
       {{ group.name }}
       <button (click)="removeGroup(group.id)">Remove Group</button>
+      <button (click)="loadChannels(group.id); selectedGroupId = group.id">Manage Channels</button>
     </li>
   </ul>
-</div>
 
-<div>
-  <h3>Create New Group</h3>
-  <form (ngSubmit)="createGroup()">
-    <label for="groupName">Group Name:</label>
-    <input type="text" id="groupName" [(ngModel)]="newGroupName" name="groupName" required>
-    <button type="submit">Create Group</button>
-  </form>
+  <div *ngIf="selectedGroupId">
+    <h4>Create New Channel</h4>
+    <form (ngSubmit)="createChannel()">
+      <label for="channelName">Channel Name:</label>
+      <input type="text" id="channelName" [(ngModel)]="newChannelName" name="channelName" required>
+      <button type="submit">Create Channel</button>
+    </form>
+
+    <ul>
+      <li *ngFor="let channel of channels">
+        {{ channel.name }}
+        <button (click)="removeChannel(channel.id)">Remove Channel</button>
+      </li>
+    </ul>
+  </div>
+
+  <div>
+    <h4>Ban User</h4>
+    <form (ngSubmit)="banUser(userIdToBan)">
+      <label for="userId">User ID:</label>
+      <input type="text" id="userId" [(ngModel)]="userIdToBan" name="userId" required>
+      <button type="submit">Ban User</button>
+    </form>
+
+    <h4>Report to Super Admin</h4>
+    <form (ngSubmit)="reportToSuperAdmin(reportReason)">
+      <label for="reportReason">Reason:</label>
+      <input type="text" id="reportReason" [(ngModel)]="reportReason" name="reportReason" required>
+      <button type="submit">Send Report</button>
+    </form>
+  </div>
 </div>

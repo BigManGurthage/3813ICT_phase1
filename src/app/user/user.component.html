@@ -1,12 +1,46 @@
-<h2>Welcome, {{ currentUser.username }}!</h2>
-<app-logout></app-logout>
+<div class="container-fluid user-layout">
+  <div class="row">
+    <!-- Groups List -->
+    <div class="col-md-4">
+      <h2 class="text-primary">Groups</h2>
+      <div *ngFor="let group of groups" class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ group.name }}</h5>
+          <!-- Button to join group if not already a member -->
+          <button *ngIf="!currentUser.groups.includes(group.name)" class="btn btn-outline-primary" (click)="joinGroup(group.name)">
+            Join Group
+          </button>
+          <!-- Button to leave group if already a member -->
+          <button *ngIf="currentUser.groups.includes(group.name)" class="btn btn-danger" (click)="leaveGroup(group.name)">
+            Leave Group
+          </button>
+          <!-- Button to select group -->
+          <button *ngIf="currentUser.groups.includes(group.name)" class="btn btn-primary" (click)="selectGroup(group.name)">
+            Select Group
+          </button>
+        </div>
+      </div>
+    </div>
 
-<p>Available groups:</p>
-<ul>
-  <li *ngFor="let group of groups">
-    <span>{{ group.name }}</span>
-    <button *ngIf="!currentUser.groups.includes(group.name)" (click)="joinGroup(group.name)">Join</button>
-    <button *ngIf="currentUser.groups.includes(group.name)" (click)="leaveGroup(group.name)">Leave</button>
-  </li>
-</ul>
-<button (click)="deleteAccount()">Delete Account</button>
+    <!-- Channels List -->
+    <div class="col-md-8">
+      <div *ngIf="selectedGroup">
+        <h2 class="text-primary">{{ selectedGroup }} - Channels</h2>
+        <ul class="list-group">
+          <li *ngFor="let channel of channels" class="list-group-item d-flex justify-content-between align-items-center">
+            {{ channel.name }}
+            <div>
+              <!-- Button to join channel -->
+              <button class="btn btn-outline-primary" (click)="joinChannel(channel.name)">Join</button>
+              <!-- Button to leave channel -->
+              <button class="btn btn-danger" (click)="leaveChannel(channel.name)">Leave</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Chat window for the selected channel -->
+      <app-chat *ngIf="selectedChannel" [channelName]="selectedChannel"></app-chat>
+    </div>
+  </div>
+</div>

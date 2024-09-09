@@ -8,8 +8,7 @@ import { CreateUserComponent } from './create-user/create-user.component';
 import { LogoutComponent } from './logout/logout.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { ChannelComponent } from './channel/channel.component';
-
-
+import { ChatComponent } from './chat/chat.component';  // Add ChatComponent
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -19,5 +18,8 @@ export const routes: Routes = [
   { path: 'create-user', component: CreateUserComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'user-list', component: UserListComponent },
-  { path: 'channels', component: ChannelComponent }
+  
+  // Add channels as child routes within groups for users to join and chat
+  { path: 'channels', component: ChannelComponent, canActivate: [RoleGuard], data: { role: 'User' } },
+  { path: 'channels/:channelName/chat', component: ChatComponent, canActivate: [RoleGuard], data: { role: 'User' } },  // Chat route
 ];

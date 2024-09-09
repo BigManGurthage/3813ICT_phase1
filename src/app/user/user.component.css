@@ -1,95 +1,28 @@
-/* User Dashboard Styles */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f6f9;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .container {
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    font-size: 26px;
-    color: #2c3e50;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  app-logout {
-    display: block;
-    margin-bottom: 20px;
-  }
-  
-  p {
-    font-size: 18px;
-    color: #34495e;
-    margin-bottom: 15px;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  li {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    border-bottom: 1px solid #ecf0f1;
-  }
-  
-  li:last-child {
-    border-bottom: none;
-  }
-  
-  span {
-    flex: 1;
-    font-size: 18px;
-    color: #2c3e50;
-  }
-  
-  button {
-    margin-left: 10px;
-    padding: 10px 15px;
-    font-size: 14px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s;
-  }
-  
-  button:hover {
-    opacity: 0.9;
-  }
-  
-  /* Join and Leave button styling */
-  button:nth-of-type(1) {
-    background-color: #27ae60; /* Green for Join */
-    color: #fff;
-  }
-  
-  button:nth-of-type(2) {
-    background-color: #c0392b; /* Red for Leave */
-    color: #fff;
-  }
-  
-  /* Delete account button styling */
-  button.delete-account {
-    background-color: #e74c3c;
-    color: #fff;
-    font-size: 16px;
-    margin-top: 20px;
-  }
-  
-  button.delete-account:hover {
-    background-color: #c0392b;
-  }
-  
+.user-layout {
+  display: flex;
+  height: 100vh;
+}
+
+.user-layout .col-md-4 {
+  border-right: 1px solid #ddd;
+  overflow-y: auto;
+}
+
+.user-layout .col-md-8 {
+  padding-left: 30px;
+  overflow-y: auto;
+}
+
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
