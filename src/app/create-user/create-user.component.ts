@@ -23,10 +23,13 @@ export class CreateUserComponent {
     if (users.some((user: any) => user.username === this.username)) {
       alert('Username already exists.');
     } else {
+      // Save the new user in localStorage
       users.push({ username: this.username, password: this.password, role: this.role });
       localStorage.setItem('users', JSON.stringify(users));
+  
       alert('User created successfully.');
-      this.router.navigate(['/']);
+      this.router.navigate(['/']); // Redirect to login page
     }
   }
+  
 }
