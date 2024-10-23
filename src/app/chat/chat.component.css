@@ -1,35 +1,187 @@
+/* Base styling for the chat layout */
 .chat-layout {
-    max-width: 100%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+  max-width: 900px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 80vh;
+  background: linear-gradient(135deg, #4f2cc3, #4bc3c3); /* Updated gradient for a fresher look */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); /* Stronger shadow for more depth */
+  border-radius: 16px;
+  padding: 30px;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Chat Box */
+.chat-box {
+  height: 450px;
+  overflow-y: auto;
+  padding: 20px;
+  border-radius: 16px;
+  background-color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 25px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  color: #333;
+  position: relative;
+}
+
+/* Chat Box floating icon (scroll to bottom) */
+.chat-box::after {
+  content: '↓';
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: #4f2cc3;
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  animation: bounce 2s infinite;
+  transition: background-color 0.3s ease;
+}
+
+.chat-box::after:hover {
+  background: #88d3ce;
+}
+
+/* Message styling */
+.message {
+  padding: 15px;
+  margin-bottom: 12px;
+  border-radius: 14px;
+  background: #f0f4ff;
+  color: #333;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.message strong {
+  color: #4f2cc3;
+  margin-right: 15px;
+  font-weight: bold;
+}
+
+.message:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Input group styling */
+.input-group {
+  display: flex;
+  gap: 15px;
+  padding: 15px;
+  border-radius: 12px;
+  background-color: #f7f9fc;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+}
+
+.input-group input {
+  flex: 1;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  color: #333;
+  background-color: #fff;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.05);
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border: 2px solid #88d3ce;
+  box-shadow: 0 0 8px rgba(136, 211, 206, 0.5);
+}
+
+/* Send Button */
+.input-group button {
+  background-color: #4f2cc3;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+.input-group button:hover {
+  background-color: #88d3ce;
+  transform: translateY(-2px);
+}
+
+/* Floating Button Animation */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
   }
-  
-  .chat-box {
-    flex-grow: 1;
-    overflow-y: auto;
-    border: 1px solid #ddd;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-radius: 5px;
+  50% {
+    transform: translateY(-12px);
   }
-  
-  .message {
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .input-group {
-    display: flex;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  
-  .form-control {
-    width: 85%;
-  }
-  
+}
+
+/* Video container styling */
+.video-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+  gap: 25px;
+}
+
+.video-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 14px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  color: #333;
+}
+
+video {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 14px;
+  border: 2px solid #4f2cc3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Logout/Go Back Button Styling */
+.logout-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 25px;
+}
+
+.logout-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 1.2rem;
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}

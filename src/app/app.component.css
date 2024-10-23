@@ -1,58 +1,104 @@
-/* Body styling */
+/* Global Styles */
 body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5; /* Light background for contrast */
-  }
-  
-  /* Main container styling */
-  .home-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh; /* Full viewport height */
-    text-align: center;
-    padding: 20px;
-  }
-  
-  /* Heading styling */
-  .home-container h1 {
-    font-size: 3rem;
-    color: #2c3e50;
-    margin-bottom: 20px;
-    font-weight: 700;
-  }
-  
-  /* Subtitle or description styling */
-  .home-container p {
-    font-size: 1.25rem;
-    color: #34495e;
-    margin-bottom: 30px;
-    line-height: 1.6;
-  }
-  
-  /* Button styling */
-  .home-container button {
-    background-color: #3498db; /* Primary blue color */
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 15px 25px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  /* Button hover effect */
-  .home-container button:hover {
-    background-color: #2980b9; /* Darker blue for hover */
-    transform: translateY(-2px); /* Slight lift effect */
-  }
-  
-  /* Router outlet styling */
-  router-outlet {
-    width: 100%;
-  }
-  
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3 {
+  font-family: 'Lato', sans-serif;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  background-color: #3498db;
+  transform: scale(1.05);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"], input[type="password"], textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input:focus, textarea:focus {
+  border-color: #2980b9;
+  outline: none;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #34495e;
+  padding: 10px;
+  text-align: center;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  font-size: 18px;
+}
+
+.navbar a:hover {
+  background-color: #2980b9;
+}
+
+/* Footer */
+.footer {
+  background-color: #2c3e50;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Card Component */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+/* Customize Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #2980b9;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #3498db;
+}

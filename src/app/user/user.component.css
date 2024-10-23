@@ -1,28 +1,147 @@
+/* Main Layout */
 .user-layout {
+  padding: 40px;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Soft gradient background */
+  min-height: 100vh;
   display: flex;
-  height: 100vh;
+  justify-content: center;
+  align-items: flex-start;
 }
 
-.user-layout .col-md-4 {
-  border-right: 1px solid #ddd;
-  overflow-y: auto;
+/* Headings Styling */
+h2 {
+  font-size: 2.5rem;
+  color: #34495e;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-.user-layout .col-md-8 {
-  padding-left: 30px;
-  overflow-y: auto;
-}
-
+/* Group Cards Styling */
 .card {
-  transition: all 0.3s ease;
+  background-color: #fff;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-  transform: scale(1.05);
+  transform: translateY(-10px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
 }
 
 .card-body {
+  padding: 20px;
+  text-align: center;
+}
+
+.card-title {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Button Styling */
+.btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 5px;
+}
+
+.btn-outline-primary {
+  background-color: transparent;
+  color: #3498db;
+  border: 2px solid #3498db;
+}
+
+.btn-outline-primary:hover {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #c0392b;
+}
+
+.btn-primary {
+  background-color: #2980b9;
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #1c598a;
+}
+
+/* Channels List Styling */
+.list-group-item {
+  background-color: #fff;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px 20px;
+  margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.list-group-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.channel-buttons button {
+  margin-left: 10px;
+}
+
+/* Chat Box Styling */
+.app-chat {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Smooth Fade-in Animation */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .user-layout {
+      padding: 20px;
+  }
+
+  .col-md-4, .col-md-8 {
+      flex: 0 0 100%;
+      max-width: 100%;
+  }
+
+  .channel-buttons {
+      display: flex;
+      justify-content: flex-end;
+  }
 }

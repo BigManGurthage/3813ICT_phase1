@@ -1,112 +1,144 @@
+// Import required modules
 const express = require('express');
+const mongoose = require('mongoose');
+const multer = require('multer');
+const http = require('http');
+const socketIO = require('socket.io');
+const { PeerServer } = require('peer');
+const path = require('path');
 const app = express();
-const port = 3000;
+const server = http.createServer(app);
+const io = socketIO(server, {
+  cors: { origin: '*' }
+});
 
-// Middleware to parse JSON and URL-encoded data
+// MongoDB connection
+mongoose.connect('mongodb://localhost:27017/chatSystem', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
+// Define Mongoose Schemas
+const userSchema = new mongoose.Schema({
+  username: String,
+  password: String,
+  avatar: String,
+  groups: [String],
+});
+const User = mongoose.model('User', userSchema);
+
+const groupSchema = new mongoose.Schema({
+  groupName: String,
+  members: [String],
+  channels: [String],
+});
+const Group = mongoose.model('Group', groupSchema);
+
+const chatSchema = new mongoose.Schema({
+  channelId: String,
+  messages: [{ username: String, message: String, avatar: String, timestamp: Date }]
+});
+const Chat = mongoose.model('Chat', chatSchema);
+
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// In-memory storage (for simplicity, replace with a database in production)
-let users = [];
-let groups = [];
-let channels = [];
-let messages = [];
-
-// Route to check if the server is working
-app.get('/', (req, res) => {
-  res.send('Chat System Backend');
-});
-
-// User Routes
-app.get('/api/users', (req, res) => {
-  res.json(users);
-});
-
-app.post('/api/users', (req, res) => {
-  console.log('POST /api/users body:', req.body);
-  const { username, email, role } = req.body;
-  if (!username || !email || !role) {
-    return res.status(400).json({ error: 'Username, email, and role are required' });
+// Improved Multer configuration for image uploads (saving with original name)
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));  // Save with original extension
   }
-  const newUser = { username, email, role };
-  users.push(newUser);
-  res.status(201).json(newUser);
+});
+const upload = multer({ storage: storage });
+
+// API Routes
+
+// User Registration (example)
+app.post('/api/register', async (req, res) => {
+  try {
+    const newUser = new User(req.body);
+    await newUser.save();
+    res.status(201).send(newUser);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
-app.delete('/api/users/:username', (req, res) => {
-  const { username } = req.params;
-  users = users.filter(user => user.username !== username);
-  res.status(200).json({ message: 'User deleted' });
+// Chat Message API
+app.post('/api/send-message', async (req, res) => {
+  const { channelId, username, message, avatar } = req.body;
+  try {
+    let chat = await Chat.findOne({ channelId });
+    if (!chat) {
+      chat = new Chat({ channelId, messages: [] });
+    }
+    chat.messages.push({ username, message, avatar, timestamp: new Date() });
+    await chat.save();
+    io.to(channelId).emit('newMessage', { username, message, avatar });
+    res.status(200).send('Message sent and saved.');
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
-// Group Routes
-app.get('/api/groups', (req, res) => {
-  res.json(groups);
+// Upload Profile Image
+app.post('/api/upload-avatar', upload.single('avatar'), async (req, res) => {
+  const { userId } = req.body;
+  const avatarPath = `/uploads/${req.file.filename}`;
+  try {
+    await User.findByIdAndUpdate(userId, { avatar: avatarPath });
+    res.status(200).send({ avatarPath });
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
-app.post('/api/groups', (req, res) => {
-  const { name, admin } = req.body;
-  if (!name || !admin) {
-    return res.status(400).json({ error: 'Name and admin are required' });
-  }
-  const newGroup = { name, admin, channels: [] };
-  groups.push(newGroup);
-  res.status(201).json(newGroup);
+// WebSockets for Real-Time Communication
+io.on('connection', (socket) => {
+  console.log('User connected:', socket.id);
+
+  socket.on('joinChannel', (channelId) => {
+    socket.join(channelId);
+    io.to(channelId).emit('userJoined', socket.id);
+  });
+
+  socket.on('leaveChannel', (channelId) => {
+    socket.leave(channelId);
+    io.to(channelId).emit('userLeft', socket.id);
+  });
+
+  socket.on('sendMessage', (data) => {
+    io.to(data.channelId).emit('newMessage', data);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
+  });
 });
 
-app.post('/api/groups/:groupName/users', (req, res) => {
-  const { groupName } = req.params;
-  const { username } = req.body;
-  const group = groups.find(g => g.name === groupName);
-  if (!group) {
-    return res.status(404).json({ error: 'Group not found' });
-  }
-  if (!group.users) {
-    group.users = [];
-  }
-  group.users.push(username);
-  res.status(200).json(group);
+// PeerJS Server for Video Chat (integrated into same server)
+const peerServer = PeerServer({
+  server: server,  // Use the same HTTP server
+  path: '/peerjs'
 });
 
-// Channel Routes
-app.get('/api/groups/:groupName/channels', (req, res) => {
-  const { groupName } = req.params;
-  const group = groups.find(g => g.name === groupName);
-  if (!group) {
-    return res.status(404).json({ error: 'Group not found' });
-  }
-  res.json(group.channels);
+peerServer.on('connection', (client) => {
+  console.log('PeerJS client connected:', client.id);
 });
 
-app.post('/api/groups/:groupName/channels', (req, res) => {
-  const { groupName } = req.params;
-  const { name } = req.body;
-  const group = groups.find(g => g.name === groupName);
-  if (!group) {
-    return res.status(404).json({ error: 'Group not found' });
-  }
-  const newChannel = { name, messages: [] };
-  group.channels.push(newChannel);
-  res.status(201).json(newChannel);
-});
-
-app.post('/api/groups/:groupName/channels/:channelName/messages', (req, res) => {
-  const { groupName, channelName } = req.params;
-  const { username, text } = req.body;
-  const group = groups.find(g => g.name === groupName);
-  if (!group) {
-    return res.status(404).json({ error: 'Group not found' });
-  }
-  const channel = group.channels.find(c => c.name === channelName);
-  if (!channel) {
-    return res.status(404).json({ error: 'Channel not found' });
-  }
-  const newMessage = { username, text, timestamp: new Date() };
-  channel.messages.push(newMessage);
-  res.status(201).json(newMessage);
+peerServer.on('disconnect', (client) => {
+  console.log('PeerJS client disconnected:', client.id);
 });
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
