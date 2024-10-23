@@ -1,108 +1,176 @@
-# Chat System - Phase 1
+Chat System
+This project is a chat system application built with Angular on the frontend and Node.js with MongoDB on the backend. It supports real-time communication using Socket.io and video calls using PeerJS.
 
-## Project Overview
+Table of Contents
+Repository Layout
+GitHub Commands
+How to Run the Project
+Data Structures
+Client-Server Responsibilities
+API Routes
+Angular Architecture
+Client-Server Interactions
+Repository Layout
+The repository is organized into the following folders:
 
-This project is part of an assignment to build a chat system using the MEAN stack. The system includes functionality for managing users, groups, channels, and user roles such as Super Admin, Group Admin, and Chat User. This is Phase 1 of the project, focusing on user management, group and channel creation, and basic chat functionality.
+src: Contains the Angular project files for the frontend.
+app: All Angular components, services, and modules.
+assets: Static files like images.
+environments: Environment-specific configurations for Angular.
+server.js: The main server file, which runs the Node.js backend.
+uploads: A directory for storing user-uploaded files.
+public: A folder containing static files served by Express.
+test: Contains the Mocha/Chai tests for API testing.
+Branching Strategy
+master: The main branch, containing the stable release of the project.
+feature-branches: Used for implementing specific features or fixing bugs.
+GitHub Commands
+Clone the Repository
+bash
+Copy code
+git clone https://github.com/BigManGurthage/chat-system.git
+cd chat-system
+Creating a New Branch
+bash
+Copy code
+git checkout -b feature-branch-name
+Adding and Committing Changes
+bash
+Copy code
+git add .
+git commit -m "Commit message describing changes"
+Pushing Changes to GitHub
+bash
+Copy code
+git push origin feature-branch-name
+Merging Branches
+After making sure the feature is tested:
 
-## Features
+bash
+Copy code
+git checkout master
+git pull origin master
+git merge feature-branch-name
+Pull Latest Changes
+bash
+Copy code
+git pull origin master
+How to Run the Project
+Prerequisites
+Node.js (v16 or higher)
+MongoDB (either locally installed or using a service like MongoDB Atlas)
+Angular CLI (globally installed)
+Backend (Node.js + MongoDB)
+Install dependencies for the backend:
 
-### User Roles
-The system supports three types of users:
-- **Super Admin**: Has full control over all users and groups.
-- **Group Admin**: Can create and manage their own groups and channels.
-- **Chat User**: Can join groups, participate in channels, and chat with other users.
+bash
+Copy code
+npm install
+Start MongoDB (Make sure your MongoDB server is running):
 
-### Groups and Channels
-- **Groups**: Each user with Group Admin privileges can create groups. Users can join groups to gain access to the channels within those groups.
-- **Channels**: Channels are created within groups for chatting. Once a user is a member of a group, they can join any channel within that group.
+bash
+Copy code
+mongod
+Run the backend:
 
-### Chat Functionality
-The chat system allows users to send and receive messages within channels. Messages are displayed in real-time, and users can interact with others in the same channel.
+bash
+Copy code
+node server.js
+Testing the API with Mocha:
 
-### Local Storage
-For Phase 1, data is stored in the browser's local storage to simulate a database. This includes user details, groups, and channels. MongoDB will be introduced in Phase 2 for persistent data storage.
+bash
+Copy code
+npx mocha test/api.test.js
+Frontend (Angular)
+Navigate to the src folder and install frontend dependencies:
 
-## Components
+bash
+Copy code
+npm install
+Run the Angular frontend:
 
-### Login Component
-- **Purpose**: Handles user login and authentication.
-- **Functionality**: Verifies user credentials and redirects to the appropriate dashboard based on the user's role.
+bash
+Copy code
+ng serve
+Open your browser and go to:
 
-### Super Admin Component
-- **Purpose**: Provides functionality for managing all users and groups in the system.
-- **Features**:
-  - Create new groups.
-  - Manage group membership.
-  - Promote users to Group Admin.
+bash
+Copy code
+http://localhost:4200
+Data Structures
+User:
+json
+Copy code
+{
+  "username": "string",
+  "password": "string",
+  "avatar": "string",
+  "groups": ["string"]
+}
+Group:
+json
+Copy code
+{
+  "groupName": "string",
+  "members": ["string"],
+  "channels": ["string"]
+}
+Chat Message:
+json
+Copy code
+{
+  "channelId": "string",
+  "messages": [
+    {
+      "username": "string",
+      "message": "string",
+      "avatar": "string",
+      "timestamp": "Date"
+    }
+  ]
+}
+Client-Server Responsibilities
+Client (Angular)
+UI/UX: Responsible for the frontend user interface, rendering groups, channels, and chat messages.
+Real-time Communication: Listens for messages from the server via Socket.io and updates the UI accordingly.
+HTTP Requests: Sends requests to the backend for actions like registering users, sending messages, and managing groups/channels.
+Server (Node.js + Express)
+API: Handles RESTful routes for user registration, message sending, and group management.
+WebSocket: Manages real-time communication between users through Socket.io.
+MongoDB: Stores and retrieves data related to users, groups, channels, and chat messages.
+API Routes
+POST /api/register
+Parameters: username, password
+Purpose: Registers a new user.
+POST /api/send-message
+Parameters: channelId, username, message, avatar
+Purpose: Sends a chat message in the specified channel.
+POST /api/upload-avatar
+Parameters: userId, avatar
+Purpose: Uploads a new profile image for the user.
+Angular Architecture
+Components:
+LoginComponent: Handles user authentication.
+GroupComponent: Manages groups and channels.
+ChatComponent: Displays the chat window and handles messaging.
+LogoutComponent: Logs the user out of the application.
+Services:
+AuthService: Manages user authentication.
+StorageService: Manages local storage for groups, channels, and messages.
+ChatService: Handles real-time chat using Socket.io.
+Models:
+User: Represents a user in the system.
+Group: Represents a group with members and channels.
+Client-Server Interaction
+When a user joins a group or channel, the following flow occurs:
 
-### Group Admin Component
-- **Purpose**: Allows Group Admins to manage their own groups.
-- **Features**:
-  - Create channels within groups.
-  - Manage users in their groups.
-
-### User Component
-- **Purpose**: Enables regular users to view and join groups and participate in channels.
-- **Features**:
-  - Join available groups.
-  - View channels within groups and participate in chat.
-
-### Channel Component
-- **Purpose**: Displays the chat interface for users to send and receive messages in real-time.
-
-### Chat Component
-- **Purpose**: Handles message sending and receiving within a channel.
-- **Features**:
-  - Displays the list of messages.
-  - Allows users to send new messages.
-
-### Routing
-The routing is managed in a `routes.ts` file, where each role has access to specific components based on their privileges.
-
-## Services
-
-### User Service
-Handles all user-related operations, including:
-- Deleting users.
-- Fetching user details.
-- Managing group memberships.
-
-### Message Service
-Manages the retrieval and sending of messages within channels:
-- **getMessages()**: Retrieves the list of messages for a channel.
-- **sendMessage()**: Sends a new message to the channel.
-
-## How to Run the Project
-
-1. **Clone the repository**:
-   ```bash
-   git clone <repository-url>
-
-
-# ChatSystem
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.2.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Client (Angular):
+The user selects a group/channel.
+A request is made to the server to join the channel.
+The server adds the user to the channel.
+Server (Node.js):
+Updates the list of users in the channel.
+Notifies all users in the channel about the new participant using Socket.io.
+Client (Angular):
+Listens for the userJoined event from the server.
+Updates the UI to show that a new user has joined.
