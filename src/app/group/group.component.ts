@@ -11,11 +11,11 @@ interface Channel {
 
 @Component({
   selector: 'app-group-admin',
-  templateUrl: './group-admin.component.html',
+  templateUrl: './group.component.html',
   standalone: true,
   imports: [FormsModule, CommonModule, LogoutComponent]
 })
-export class GroupAdminComponent implements OnInit {
+export class GroupComponent implements OnInit {
   channels: Channel[] = [];
   newChannelName: string = '';
 

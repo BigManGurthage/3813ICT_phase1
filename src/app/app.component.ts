@@ -12,6 +12,8 @@ import { LogoutComponent } from './logout/logout.component';
 export class AppComponent {
   constructor(private router: Router) {}
 
+  title = 'chat-system';
+
   navigateTo(route: string) {
     this.router.navigate([`/${route}`]);
   }
